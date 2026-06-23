@@ -1,0 +1,21 @@
+{
+  "name": "library-qa-demo",
+  "version": "1.0.0",
+  "description": "A teaching repo for learning testing & QA in Node.js: a library late-fees checkout module taken from unit tests -> TDD -> integration -> coverage -> CI.",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "coverage": "vitest run --coverage",
+    "start": "node src/server.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^2.1.9",
+    "supertest": "^7.1.1",
+    "vitest": "^2.1.9"
+  }
+}
