@@ -17,7 +17,36 @@ export function createApp() {
   // TODO(student): validate the body, else respond with feesSubtotal/feesTotal
   // and waiver = subtotal - total.
   app.post("/checkout", (req, res) => {
-    res.status(501).json({ error: "TODO(student): implement POST /checkout" });
+    const items = req.body.items
+    const code = req.body.code
+
+    if(items === undefined || !Array.isArray(items))
+    {
+      return res.status(400).json({
+        success : false,
+        message: "Items not found"
+      })
+    }
+
+    if(items.some(item => typeof(item.daysLate) != "number" || typeof(item.dailyRate) != "number"))
+    {
+      return res.status(400).json({
+        success : false,
+        message: "Values must be a number"
+      })
+    }
+    
+    const subtotal = feesSubtotal(items)
+
+    const total = feesTotal(items,code)
+
+    const waiver = subtotal - total
+    // res.status(501).json({ error: "TODO(student): implement POST /checkout" });
+    res.json({
+      subtotal : subtotal,
+      waiver : waiver,
+      total : total
+    })
   });
 
   return app;

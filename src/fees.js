@@ -19,7 +19,26 @@ export function feesSubtotal(items) {
 // STUDENT -> 10% off, SENIOR -> 20% off, FIRSTBOOK -> $5 off, else no change.
 export function applyWaiver(subtotal, code) {
   // TODO(student): switch on code, then clamp with Math.max(0, ...) and round2.
-  throw new Error("TODO(student): implement applyWaiver");
+  switch (code)
+  {
+    case "STUDENT":
+      subtotal = subtotal * 0.9
+      break;
+    case "SENIOR":
+      subtotal = subtotal * 0.8
+      break;
+    case "FIRSTBOOK":
+      subtotal = Math.max(0,subtotal - 5)
+      
+      break;
+
+    default:
+      return round2(subtotal)
+
+  }
+
+  return round2(subtotal)
+  
 }
 
 // Subtotal with the waiver applied. (provided; green once applyWaiver works)
