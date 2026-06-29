@@ -4,12 +4,28 @@
 // TODO(student): make it reliable (Vitest fake timers are cleanest), then
 // change describe.skip -> describe.
 
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterEach} from "vitest";
 
-describe.skip("flaky timing example (fix me)", () => {
-  it("waits at least 50ms", async () => {
-    const start = Date.now();
-    await new Promise((r) => setTimeout(r, 50));
-    expect(Date.now() - start).toBeGreaterThanOrEqual(50); // can fire early
+describe("flaky timing example (fix me)", () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
   });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+   it("waits at least 50ms", async () => {
+    const promise = new Promise((resolve) => {
+      setTimeout(resolve, 50);
+    });
+
+    const start = Date.now();
+
+    vi.advanceTimersByTime(50);
+    await promise;
+
+    const elapsed = Date.now() - start;
+
+    expect(elapsed).toBeGreaterThanOrEqual(50);
+    });
 });
